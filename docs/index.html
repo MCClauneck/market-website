@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCEconomy - Market Extension</title>
+    <link rel="stylesheet" href="css/partial/header.css">
+    <link rel="stylesheet" href="css/partial/footer.css">
+    <link rel="stylesheet" href="css/home/main.css">
+    <link rel="stylesheet" href="css/code.css">
+    
+    <style>
+        /* Local overrides for documentation layout */
+        .doc-section {
+            padding: 40px 20px;
+            background-color: var(--bg-color);
+        }
+        
+        /* Reusing content-wrapper but aligning left for text readability */
+        .doc-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left; 
+            line-height: 1.6;
+        }
+
+        .doc-wrapper h2 {
+            color: var(--accent-color);
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+
+        .doc-wrapper h3 {
+            color: #c9d1d9;
+            margin-top: 25px;
+        }
+
+        .doc-wrapper ul {
+            color: #8b949e;
+        }
+
+        .doc-wrapper strong {
+            color: #c9d1d9;
+        }
+    </style>
+</head>
+<body class="night-theme">
+
+    <div id="header-placeholder"></div>
+
+    <main class="hero-section" style="flex: 0; padding-top: 60px;">
+        <div class="content-wrapper">
+            <h1 class="hero-title">🛒 Market Extension</h1>
+            <p class="hero-subtitle">The advanced GUI shop system for <strong>MCEconomy</strong>.</p>
+            
+            <div class="currency-grid">
+                <div class="currency-item"><span>📦</span> BASE64 STORAGE</div>
+                <div class="currency-item"><span>⚡</span> ASYNC TRANSACTIONS</div>
+                <div class="currency-item"><span>🛠</span> GUI EDITOR</div>
+            </div>
+        </div>
+    </main>
+
+    <section class="doc-section">
+        <div class="doc-wrapper">
+            
+            <h2>🛠 How It Works</h2>
+            <p>The Market extension operates as a dynamic module loaded by the MCEconomy core. It bridges the gap between physical Minecraft items and digital economy currencies.</p>
+
+            <h3>1. Data Storage & Configuration</h3>
+            <ul>
+                <li><strong>YAML-Based Storage:</strong> Each market category is stored as a separate <code>.yml</code> file.</li>
+                <li><strong>Item Integrity:</strong> Items are stored using <strong>Base64 serialization</strong>, preserving enchantments, lore, and NBT tags.</li>
+                <li><strong>Dynamic Loading:</strong> Markets are loaded into memory on start for fast access.</li>
+            </ul>
+
+            <h3>2. The Player Experience</h3>
+            <ul>
+                <li><strong>Buying (Left-Click):</strong> Asynchronous withdrawal, synchronous item delivery.</li>
+                <li><strong>Selling (Right-Click):</strong> Validates metadata match, removes item, deposits funds asynchronously.</li>
+                <li><strong>Visual Feedback:</strong> Pricing and hints are automatically appended to item lore.</li>
+            </ul>
+
+            <h3>3. The In-Game Editor</h3>
+            <p>Admins can edit shops entirely in-game without touching config files.</p>
+            <ul>
+                <li><strong>Drag-and-Drop:</strong> Drag items from inventory to the GUI to add them.</li>
+                <li><strong>Chat Inputs:</strong> Shift+Click to set Buy/Sell prices via chat.</li>
+                <li><strong>Currency Cycling:</strong> Middle-click to swap between Coin, Token, etc.</li>
+            </ul>
+
+            <h2>🎮 Commands</h2>
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Command Usage</span>
+                </div>
+                <pre><span class="keyword">/market</span> &lt;name&gt; [page]       <span class="comment"># Opens a specific market GUI</span>
+<span class="keyword">/market</span> create &lt;name&gt;       <span class="comment"># Creates a new market file</span>
+<span class="keyword">/market</span> edit &lt;name&gt; [page]  <span class="comment"># Opens Editor Mode</span></pre>
+            </div>
+
+            <h2>⚙️ Technical Architecture</h2>
+            <p><strong>Asynchronous Economy:</strong> The extension strictly adheres to thread-safety standards. All database transactions occur off the main server thread to prevent TPS drops.</p>
+            <p><strong>Pagination:</strong> The GUI supports infinite pages (45 items per page) with auto-generated navigation buttons.</p>
+
+            <h2>📄 Configuration Example</h2>
+            <p>While the editor handles setup, files are human-readable. Here is a generated <code>ore.yml</code>:</p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span>ore.yml</span>
+                    <span>YAML</span>
+                </div>
+                <pre>
+<span class="keyword">name:</span> <span class="string">"Ore Market"</span>
+<span class="keyword">items:</span>
+  <span class="string">'1':</span>
+    <span class="keyword">buy:</span>
+      <span class="keyword">price:</span> 50
+    <span class="keyword">sell:</span>
+      <span class="keyword">price:</span> 10
+    <span class="keyword">currency:</span> <span class="string">"coin"</span>
+    <span class="keyword">amount:</span> 1
+    <span class="keyword">metadata:</span> <span class="string">"rO0ABXNyABpv..."</span> <span class="comment"># Base64 string of the item</span></pre>
+            </div>
+
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        const loadPartial = (id, path) => {
+            fetch(path)
+                .then(response => response.text())
+                .then(data => document.getElementById(id).innerHTML = data);
+        };
+        loadPartial('header-placeholder', 'partial/header.html');
+        loadPartial('footer-placeholder', 'partial/footer.html');
+    </script>
+</body>
+</html>
